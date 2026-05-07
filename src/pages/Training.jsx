@@ -139,15 +139,19 @@ const Training = () => {
         </div>
 
         {/* What We Offer */}
-        <motion.div 
+        <motion.div
           className="mb-24"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
           variants={itemVariants}
         >
           <motion.h2
             className="text-3xl font-bold text-center text-white mb-12"
             initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.6 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
           >
             What We Offer
           </motion.h2>
@@ -177,16 +181,18 @@ const Training = () => {
         {/* Sample Courses */}
         <motion.div
           className="bg-gradient-to-r from-blue-900 to-blue-800 rounded-2xl p-12 text-white shadow-xl mb-24"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.8 }}
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
         >
           <div className="max-w-6xl mx-auto">
             <motion.h2
               className="text-3xl font-bold mb-12 text-center"
-              initial={{ y: 20 }}
-              animate={{ y: 0 }}
-              transition={{ delay: 0.9 }}
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
             >
               Featured Courses
             </motion.h2>
@@ -195,9 +201,10 @@ const Training = () => {
                 <motion.div
                   key={index}
                   className="bg-gray-800/50 p-6 rounded-xl border border-gray-700/50 hover:border-blue-400 transition-colors"
-                  initial={{ x: -20, opacity: 0 }}
-                  animate={{ x: 0, opacity: 1 }}
-                  transition={{ delay: 1.0 + index * 0.15 }}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
                   whileHover={{ y: -5 }}
                 >
                   <h3 className="text-xl font-bold text-white mb-3">{course.title}</h3>
@@ -224,15 +231,19 @@ const Training = () => {
         </motion.div>
 
         {/* Training Features */}
-        <motion.div 
+        <motion.div
           className="grid md:grid-cols-2 gap-12 items-center mb-24"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
           variants={itemVariants}
         >
           <div>
-            <motion.h2 
+            <motion.h2
               className="text-3xl font-bold text-white mb-6"
-              initial={{ x: -50 }}
-              animate={{ x: 0 }}
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
               transition={{ type: "spring", stiffness: 100 }}
             >
               Training Program Features
@@ -240,16 +251,18 @@ const Training = () => {
             <motion.div
               className="grid grid-cols-2 gap-4"
               initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.6 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
             >
               {trainingFeatures.map((feature, index) => (
                 <motion.div
                   key={index}
                   className="flex items-start bg-gray-800 p-4 rounded-lg"
                   initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.8 + index * 0.1 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.08 }}
                 >
                   <div className="bg-blue-600 p-1 rounded-full mr-3 mt-0.5">
                     <FiCheckCircle className="w-4 h-4" />
@@ -262,8 +275,9 @@ const Training = () => {
           <motion.div
             className="relative"
             initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.5 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
           >
             <div className="absolute -inset-4 bg-blue-900 rounded-2xl rotate-2 opacity-30"></div>
             <div className="relative bg-gray-800 p-8 rounded-2xl shadow-xl border border-gray-700">
@@ -307,8 +321,9 @@ const Training = () => {
         <motion.div
           className="mb-24"
           initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
         >
           <h2 className="text-3xl font-bold text-center text-white mb-12">What Participants Say</h2>
           <div className="grid md:grid-cols-3 gap-6">
@@ -333,8 +348,9 @@ const Training = () => {
                 key={index}
                 className="bg-gray-800 p-8 rounded-xl shadow-lg border border-gray-700"
                 initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 1.2 + index * 0.2 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.15 }}
               >
                 <div className="text-blue-400 text-3xl mb-4">"</div>
                 <p className="text-gray-300 mb-6 italic">{testimonial.quote}</p>
@@ -351,8 +367,9 @@ const Training = () => {
         <motion.div
           className="mb-24 bg-gradient-to-r from-gray-800 to-gray-700 rounded-2xl p-10 border border-gray-600 flex flex-col md:flex-row items-center justify-between gap-8"
           initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.2 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
         >
           <div className="flex items-center gap-5">
             <div className="bg-blue-600/20 border border-blue-500/30 rounded-xl p-4">
@@ -379,8 +396,9 @@ const Training = () => {
         <motion.div
           className="text-center"
           initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.4 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
         >
           <h2 className="text-3xl font-bold text-white mb-6">Ready to Enhance Your Skills?</h2>
           <p className="text-xl text-gray-300 max-w-2xl mx-auto mb-8">

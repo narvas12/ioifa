@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { FiMail, FiPhone, FiClock, FiMapPin, FiSend, FiCalendar, FiUser, FiMessageSquare } from 'react-icons/fi';
+import { motion, AnimatePresence } from 'framer-motion';
+import { FiMail, FiPhone, FiClock, FiMapPin, FiSend, FiCalendar, FiUser, FiMessageSquare, FiChevronDown } from 'react-icons/fi';
 import { FaLinkedin, FaTwitter, FaFacebook, FaInstagram } from 'react-icons/fa';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
+    subject: '',
     message: ''
   });
 
@@ -22,7 +23,7 @@ const Contact = () => {
     // Handle form submission
     console.log('Form submitted:', formData);
     alert('Thank you for your message! We will get back to you soon.');
-    setFormData({ name: '', email: '', message: '' });
+    setFormData({ name: '', email: '', subject: '', message: '' });
   };
 
   const faqs = [
@@ -175,6 +176,23 @@ const Contact = () => {
               </div>
               
               <div>
+                <label htmlFor="subject" className="block text-gray-300 mb-2">Subject</label>
+                <div className="relative">
+                  <FiMessageSquare className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                  <input
+                    type="text"
+                    id="subject"
+                    name="subject"
+                    value={formData.subject}
+                    onChange={handleChange}
+                    placeholder="What is this about?"
+                    className="w-full bg-gray-700 border border-gray-600 rounded-lg py-3 pl-10 pr-4 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-500"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div>
                 <label htmlFor="message" className="block text-gray-300 mb-2">Your Message</label>
                 <div className="relative">
                   <FiMessageSquare className="absolute left-3 top-4 text-gray-400" />
@@ -225,21 +243,21 @@ const Contact = () => {
                   onClick={() => setActiveFaq(activeFaq === index ? null : index)}
                 >
                   <h3 className="text-lg font-semibold text-white">{faq.question}</h3>
-                  <span className={`text-blue-400 transform transition-transform ${activeFaq === index ? 'rotate-180' : ''}`}>
-                    ▼
-                  </span>
+                  <FiChevronDown className={`text-blue-400 transform transition-transform ${activeFaq === index ? 'rotate-180' : ''}`} />
                 </button>
-                {activeFaq === index && (
-                  <motion.div
-                    className="px-6 pb-5 text-gray-300"
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: 'auto' }}
-                    exit={{ opacity: 0, height: 0 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    {faq.answer}
-                  </motion.div>
-                )}
+                <AnimatePresence>
+                  {activeFaq === index && (
+                    <motion.div
+                      className="px-6 pb-5 text-gray-300"
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: 'auto' }}
+                      exit={{ opacity: 0, height: 0 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      {faq.answer}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </motion.div>
             ))}
           </div>

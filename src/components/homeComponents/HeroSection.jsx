@@ -106,12 +106,23 @@ const Hero = () => {
             </motion.div>
             
             <motion.div
-              className="mt-12 flex items-center space-x-6"
+              className="mt-10 flex flex-wrap items-center gap-6"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.8 }}
             >
-              
+              {[
+                { value: '10,000+', label: 'Members' },
+                { value: '60+', label: 'Countries' },
+                { value: '15+', label: 'Years' },
+              ].map((stat, i) => (
+                <div key={i} className={`flex items-center gap-3 ${i > 0 ? 'pl-6 border-l border-gray-600' : ''}`}>
+                  <div>
+                    <div className="text-xl font-bold text-white">{stat.value}</div>
+                    <div className="text-xs text-gray-400 uppercase tracking-wide">{stat.label}</div>
+                  </div>
+                </div>
+              ))}
             </motion.div>
           </motion.div>
 
@@ -145,7 +156,7 @@ const Hero = () => {
                   Live Case Study
                 </div>
                 <h3 className="text-white font-semibold text-lg">Advanced Financial Investigation Techniques</h3>
-                <p className="text-gray-300 text-sm mt-1">Next session: June 15, 2023</p>
+                <p className="text-gray-300 text-sm mt-1">Next session: May 25, 2026</p>
               </div>
             </motion.div>
             
