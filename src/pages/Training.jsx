@@ -1,8 +1,11 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { FiCalendar, FiBookOpen, FiUsers, FiLayers, FiBriefcase, FiClock, FiCheckCircle } from 'react-icons/fi';
+import { FiCalendar, FiBookOpen, FiUsers, FiLayers, FiBriefcase, FiClock, FiCheckCircle, FiCamera } from 'react-icons/fi';
+import { useNavigate } from 'react-router-dom';
 
 const Training = () => {
+  const navigate = useNavigate();
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -342,6 +345,34 @@ const Training = () => {
               </motion.div>
             ))}
           </div>
+        </motion.div>
+
+        {/* March Edition Gallery Banner */}
+        <motion.div
+          className="mb-24 bg-gradient-to-r from-gray-800 to-gray-700 rounded-2xl p-10 border border-gray-600 flex flex-col md:flex-row items-center justify-between gap-8"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.2 }}
+        >
+          <div className="flex items-center gap-5">
+            <div className="bg-blue-600/20 border border-blue-500/30 rounded-xl p-4">
+              <FiCamera className="w-8 h-8 text-blue-400" />
+            </div>
+            <div>
+              <p className="text-blue-400 text-sm font-medium mb-1">Photo Gallery</p>
+              <h3 className="text-2xl font-bold text-white">March Edition of Training &amp; Induction</h3>
+              <p className="text-gray-400 mt-1">Highlights and memorable moments from our March 2025 cohort</p>
+            </div>
+          </div>
+          <motion.button
+            onClick={() => navigate('/gallery/march-training-induction')}
+            className="flex-shrink-0 flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-medium px-6 py-3 rounded-lg transition-colors"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <FiCamera className="w-4 h-4" />
+            View Gallery
+          </motion.button>
         </motion.div>
 
         {/* Final CTA */}

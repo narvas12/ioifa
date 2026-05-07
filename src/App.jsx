@@ -14,6 +14,7 @@ import Footer from "./components/Navs/Footer";
 import About from "./pages/About";
 import Certification from "./pages/Certification";
 import Training from "./pages/Training";
+import TrainingGallery from "./pages/TrainingGallery";
 import Research from "./pages/Research";
 import Membership from "./pages/Membership";
 import Contact from "./pages/Contact";
@@ -36,6 +37,7 @@ const publicRoutes = [
   { path: "/research", element: <Research /> },
   { path: "/membership", element: <Membership /> },
   { path: "/training", element: <Training /> },
+  { path: "/gallery/march-training-induction", element: <TrainingGallery /> },
   { path: "/reservation", element: <CompanyNameReservationForm /> },
   { path: "/services/:serviceId", element: <ServiceDetail /> },
   { path: "/register", element: <AdminRegister /> },
