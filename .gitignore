@@ -2,3 +2,4 @@ node_modules
 .claude/
 src/assets/images/training/
 upload-to-cloudinary.mjs
+.env

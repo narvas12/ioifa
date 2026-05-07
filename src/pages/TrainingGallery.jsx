@@ -14,19 +14,40 @@ const TrainingGallery = () => {
   const [lightboxIndex, setLightboxIndex] = useState(null);
 
   useEffect(() => {
-    fetch('/api/gallery')
-      .then((r) => {
-        if (!r.ok) throw new Error('Failed to load gallery');
-        return r.json();
-      })
-      .then(({ images }) => {
-        setPhotos(images.map((src, i) => ({ id: i + 1, src })));
-        setLoading(false);
-      })
-      .catch((err) => {
+    const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
+    const apiKey    = import.meta.env.VITE_CLOUDINARY_API_KEY;
+    const apiSecret = import.meta.env.VITE_CLOUDINARY_API_SECRET;
+    const folder    = import.meta.env.VITE_CLOUDINARY_FOLDER;
+    const creds     = btoa(`${apiKey}:${apiSecret}`);
+
+    const fetchAll = async () => {
+      const urls = [];
+      let nextCursor = null;
+      try {
+        do {
+          const params = new URLSearchParams({ prefix: folder, type: 'upload', max_results: '500' });
+          if (nextCursor) params.set('next_cursor', nextCursor);
+
+          const res = await fetch(
+            `https://api.cloudinary.com/v1_1/${cloudName}/resources/image?${params}`,
+            { headers: { Authorization: `Basic ${creds}` } }
+          );
+          if (!res.ok) throw new Error(`Failed to load gallery (${res.status})`);
+
+          const data = await res.json();
+          urls.push(...data.resources.map((r) => r.secure_url));
+          nextCursor = data.next_cursor || null;
+        } while (nextCursor);
+
+        setPhotos(urls.map((src, i) => ({ id: i + 1, src })));
+      } catch (err) {
         setError(err.message);
+      } finally {
         setLoading(false);
-      });
+      }
+    };
+
+    fetchAll();
   }, []);
 
   const openLightbox = (index) => setLightboxIndex(index);
