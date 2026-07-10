@@ -1,8 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import { FiUsers, FiAward, FiBook, FiGlobe, FiMail, FiBriefcase } from 'react-icons/fi';
+import FormModal from '../modals/FormModal';
+import MembershipPaymentForm from '../components/forms/MembershipPaymentForm';
+import { PAYABLE_TIERS, formatNaira } from '../../shared/membershipTiers';
 
 const Membership = () => {
+  const navigate = useNavigate();
+  const [paymentModal, setPaymentModal] = useState({ open: false, tierId: 'student' });
+
+  const openPayment = (tierId = 'student') => setPaymentModal({ open: true, tierId });
+  const closePayment = () => setPaymentModal((prev) => ({ ...prev, open: false }));
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -29,11 +39,13 @@ const Membership = () => {
   const membershipLevels = [
     {
       level: "Student Member",
+      tierId: "student",
       requirements: "Currently enrolled in relevant academic program",
       benefits: ["Access to student resources", "Discounted training rates", "Mentorship opportunities"]
     },
     {
-      level: "Associate Member",
+      level: "Affiliate Member",
+      tierId: "affiliate",
       requirements: "Entry-level professionals in forensic auditing",
       benefits: ["Basic member resources", "Networking access", "Professional development tools"]
     },
@@ -171,16 +183,21 @@ const Membership = () => {
               {membershipLevels.map((level, index) => (
                 <motion.div
                   key={index}
-                  className="bg-gray-800/50 p-6 rounded-xl border border-gray-700/50 hover:border-blue-400 transition-colors"
+                  className="bg-gray-800/50 p-6 rounded-xl border border-gray-700/50 hover:border-blue-400 transition-colors flex flex-col"
                   initial={{ x: -20, opacity: 0 }}
                   animate={{ x: 0, opacity: 1 }}
                   transition={{ delay: 1.0 + index * 0.2 }}
                   whileHover={{ y: -5 }}
                 >
-                  <h3 className="text-xl font-bold text-white mb-3">{level.level}</h3>
+                  <h3 className="text-xl font-bold text-white mb-2">{level.level}</h3>
+                  {level.tierId && (
+                    <p className="text-2xl font-bold text-blue-300 mb-3">
+                      {formatNaira(PAYABLE_TIERS[level.tierId].amountNaira)}
+                    </p>
+                  )}
                   <p className="text-gray-300 text-sm mb-4">{level.requirements}</p>
                   <h4 className="text-md font-semibold text-blue-300 mb-2">Benefits:</h4>
-                  <ul className="space-y-2">
+                  <ul className="space-y-2 mb-6">
                     {level.benefits.map((benefit, i) => (
                       <li key={i} className="flex items-start">
                         <div className="text-green-400 mr-2 mt-1">•</div>
@@ -188,6 +205,25 @@ const Membership = () => {
                       </li>
                     ))}
                   </ul>
+                  {level.tierId ? (
+                    <motion.button
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      onClick={() => openPayment(level.tierId)}
+                      className="mt-auto w-full bg-blue-600 hover:bg-blue-500 text-white font-medium py-2.5 px-4 rounded-lg shadow-md"
+                    >
+                      Pay & Join
+                    </motion.button>
+                  ) : (
+                    <motion.button
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      onClick={() => navigate('/contact')}
+                      className="mt-auto w-full bg-transparent border border-gray-500 hover:border-blue-400 text-white font-medium py-2.5 px-4 rounded-lg"
+                    >
+                      Contact Us to Apply
+                    </motion.button>
+                  )}
                 </motion.div>
               ))}
             </div>
@@ -271,6 +307,7 @@ const Membership = () => {
                       boxShadow: "0 5px 15px rgba(59, 130, 246, 0.4)"
                     }}
                     whileTap={{ scale: 0.95 }}
+                    onClick={() => openPayment()}
                     className="w-full bg-blue-600 text-white font-medium py-3 px-6 rounded-lg shadow-md flex items-center justify-center"
                   >
                     Apply for Membership
@@ -379,6 +416,7 @@ const Membership = () => {
                 boxShadow: "0 10px 15px -3px rgba(0, 0, 0, 0.3)"
               }}
               whileTap={{ scale: 0.95 }}
+              onClick={() => openPayment()}
               className="bg-blue-600 text-white font-medium py-3 px-8 rounded-lg shadow-lg text-lg transition-all"
             >
               Apply for Membership
@@ -396,6 +434,14 @@ const Membership = () => {
           </div>
         </motion.div>
       </div>
+
+      <FormModal show={paymentModal.open} onClose={closePayment}>
+        <MembershipPaymentForm
+          key={`${paymentModal.tierId}-${paymentModal.open}`}
+          initialTierId={paymentModal.tierId}
+          onClose={closePayment}
+        />
+      </FormModal>
     </motion.div>
   );
 };

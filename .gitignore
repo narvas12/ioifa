@@ -1,4 +1,5 @@
 node_modules
+dist
 .claude/
 src/assets/images/training/
 upload-to-cloudinary.mjs
